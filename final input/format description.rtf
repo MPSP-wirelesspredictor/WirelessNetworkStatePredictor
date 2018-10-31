@@ -1,0 +1,49 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 finalinput.csv is the input vector for model.
+\b0 \
+\
+Every input is represented by a vector, whose number of dimension is 603.\
+It is formed in the following way:\
+
+\b 1.
+\b0 \
+First 600 dimensions is conation of weather data from 10 locations. Each location of 60 dimension weather data. \
+For each location, the first 6 feature is \
+
+\b Temperature\
+Temperature difference\
+Pressure\
+Humidity\
+wind_speed\
+clouds\
+
+\b0 The following 54 dimension represents 1 feature: \
+
+\b bag of weathers
+\b0 .\
+\
+
+\b 2.
+\b0 \
+Last 3 dimensions are the label of drop rate.\
+In order, they are\
+
+\b Max drop rate\
+Average drop rate\
+Min drop rate\
+\
+
+\b0 Correlation between drop rate label and real drop rate is:\
+range.         Label.   \
+0%                  0\
+(0%,10%]        1\
+(10%,100%)   2\
+100%              3\
+\
+}
