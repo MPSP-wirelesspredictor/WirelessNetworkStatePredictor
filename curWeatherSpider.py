@@ -30,6 +30,7 @@ import csv
 from itertools import izip_longest
 from itertools import chain
 import csv
+import daemon
 
 # savedFile = 'curWeather_'+filenames[0]+'_'+locs[0][0]+'_'+locs[0][1]+'.csv'
 # f = csv.writer(open(savedFile, "wb+"))
@@ -59,7 +60,6 @@ import csv
 
 # starts = timeSplitter(start1, end1, [])
 # ends = timeSplitter(start2, end2, [])
-
 
 def spider(path):
     global curResult 
@@ -101,11 +101,14 @@ def spider(path):
                     ])
     return curResult
 
-cur_AUR02_CAR01 = spider('AUR02-CAR01.csv')
-cur_CHI02_AUR02 = spider('CHI02-AUR02.csv')
-cur_FRA01_SLO02 = spider('FRA01-SLO02.csv')
-cur_SEC10_TOR01 = spider('SEC10-TOR01.csv')
+# with daemon.DaemonContext():
 
+while(True):
+    cur_AUR02_CAR01 = spider('AUR02-CAR01.csv')
+    cur_CHI02_AUR02 = spider('CHI02-AUR02.csv')
+    cur_FRA01_SLO02 = spider('FRA01-SLO02.csv')
+    cur_SEC10_TOR01 = spider('SEC10-TOR01.csv')
+    t1.sleep(3*60*60)
 
 
 # {

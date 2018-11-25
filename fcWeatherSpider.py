@@ -90,7 +90,11 @@ def spider(path):
                         ])
     return fcResult
 
-fc_AUR02_CAR01 = spider('AUR02-CAR01.csv')
-fc_CHI02_AUR02 = spider('CHI02-AUR02.csv')
-fc_FRA01_SLO02 = spider('FRA01-SLO02.csv')
-fc_SEC10_TOR01 = spider('SEC10-TOR01.csv')
+while(True):
+    fc_AUR02_CAR01 = spider('AUR02-CAR01.csv')
+    fc_CHI02_AUR02 = spider('CHI02-AUR02.csv')
+    fc_FRA01_SLO02 = spider('FRA01-SLO02.csv')
+    fc_SEC10_TOR01 = spider('SEC10-TOR01.csv')
+    t1.sleep(60*60*3)
+
+
