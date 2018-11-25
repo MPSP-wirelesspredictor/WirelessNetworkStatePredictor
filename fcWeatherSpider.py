@@ -61,8 +61,8 @@ fmt = '%Y-%m-%d %H:%M:%S'
 filenames = ['AUR02-CAR01.csv', 'CHI02-AUR02.csv', 'FRA01-SLO02.csv', 'SEC10-TOR01.csv']
 
 def spider(path):
-    global result 
-    result = []
+    global fcResult
+    fcResult = []
     locs = []
     with open(path, 'rb') as csvf:
         dataReader = csv.reader(csvf)
@@ -78,7 +78,7 @@ def spider(path):
         json_data = yaml.load(json.dumps(response.json()))
         for x in json_data['list']:
             weather_data = ((item["id"], item["main"], item["description"]) for item in x["weather"])
-            result.append([datetime.utcfromtimestamp(int(x["dt"])).strftime('%Y-%m-%d %H:%M:%S'),
+            fcResult.append([datetime.utcfromtimestamp(int(x["dt"])).strftime('%Y-%m-%d %H:%M:%S'),
                         x["main"]["temp"],
                         x["main"]["pressure"],
                         x["main"]["humidity"],
@@ -89,7 +89,7 @@ def spider(path):
                         x["clouds"]["all"],
                         list(weather_data)
                         ])
-    return result
+    return fcResult
 
 fc_AUR02_CAR01 = spider('AUR02-CAR01.csv')
 fc_CHI02_AUR02 = spider('CHI02-AUR02.csv')
