@@ -58,36 +58,40 @@ fmt = '%Y-%m-%d %H:%M:%S'
 # starts = timeSplitter(start1, end1, [])
 # ends = timeSplitter(start2, end2, [])
 
-filenames = ['AUR02-CAR01', 'CHI02-AUR02', 'FRA01-SLO02', 'SEC10-TOR01']
-fcs = [[],[],[],[]]
+filenames = ['AUR02-CAR01.csv', 'CHI02-AUR02.csv', 'FRA01-SLO02.csv', 'SEC10-TOR01.csv']
 
-# for loop of 4 locs needed
-locs = []
-with open(filenames[0]+'.csv', 'rb') as csvf:
-    dataReader = csv.reader(csvf)
-    for line in dataReader:
-        locs.append(line)
+def spider(path):
+    global result 
+    result = []
+    locs = []
+    with open(path, 'rb') as csvf:
+        dataReader = csv.reader(csvf)
+        for line in dataReader:
+            locs.append(line)
 
-# savedFile = 'fcWeather_'+filenames[0]+'_'+locs[0][0]+'_'+locs[0][1]+'.csv'
-# f = csv.writer(open(savedFile, "wb+"))
-# f.writerow(["dt", "temp", "pressure", "humidity", "temp_min", "temp_max", "wind_speed", "wind_deg", "clouds", "weather"])
-for i in range(4):
-    url = "http://api.openweathermap.org/data/2.5/forecast?lat=%s&lon=%s&APPID=ea4985020f724407dea8833c9dfee64c"%(locs[i][0], locs[i][1])
-    response = requests.get(url)
-    json_data = yaml.load(json.dumps(response.json()))
-    for x in json_data['list']:
-        weather_data = ((item["id"], item["main"], item["description"]) for item in x["weather"])
-        fcs[i].append([datetime.utcfromtimestamp(int(x["dt"])).strftime('%Y-%m-%d %H:%M:%S'),
-                    x["main"]["temp"],
-                    x["main"]["pressure"],
-                    x["main"]["humidity"],
-                    x["main"]["temp_min"],
-                    x["main"]["temp_max"],
-                    x["wind"]["speed"],
-                    x["wind"]["deg"],
-                    x["clouds"]["all"],
-                    list(weather_data)
-                    ])
-# print fcs[0][0]: ['2018-11-25 03:00:00', 275.24, 991.94, 87, 274.108, 275.24, 3.48, 267.012, 48, [(802, 'Clouds', 'scattered clouds')]]
+    # savedFile = 'fcWeather_'+filenames[0]+'_'+locs[0][0]+'_'+locs[0][1]+'.csv'
+    # f = csv.writer(open(savedFile, "wb+"))
+    # f.writerow(["dt", "temp", "pressure", "humidity", "temp_min", "temp_max", "wind_speed", "wind_deg", "clouds", "weather"])
+    for loc in locs:
+        url = "http://api.openweathermap.org/data/2.5/forecast?lat=%s&lon=%s&APPID=ea4985020f724407dea8833c9dfee64c"%(loc[0], loc[1])
+        response = requests.get(url)
+        json_data = yaml.load(json.dumps(response.json()))
+        for x in json_data['list']:
+            weather_data = ((item["id"], item["main"], item["description"]) for item in x["weather"])
+            result.append([datetime.utcfromtimestamp(int(x["dt"])).strftime('%Y-%m-%d %H:%M:%S'),
+                        x["main"]["temp"],
+                        x["main"]["pressure"],
+                        x["main"]["humidity"],
+                        x["main"]["temp_min"],
+                        x["main"]["temp_max"],
+                        x["wind"]["speed"],
+                        x["wind"]["deg"],
+                        x["clouds"]["all"],
+                        list(weather_data)
+                        ])
+    return result
 
-
+fc_AUR02_CAR01 = spider('AUR02-CAR01.csv')
+fc_CHI02_AUR02 = spider('CHI02-AUR02.csv')
+fc_FRA01_SLO02 = spider('FRA01-SLO02.csv')
+fc_SEC10_TOR01 = spider('SEC10-TOR01.csv')
