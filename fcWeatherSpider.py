@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#title           :fcWeatherDataSpider.py
+#title           :weatherDataSpider.py
 #description     :This will create a header for a python script.
 #author          :Yuanyuan Zhao
 #date            :20181003
@@ -61,7 +61,7 @@ fmt = '%Y-%m-%d %H:%M:%S'
 filenames = ['AUR02-CAR01.csv', 'CHI02-AUR02.csv', 'FRA01-SLO02.csv', 'SEC10-TOR01.csv']
 
 def spider(path):
-    global fcResult
+    global fcResult 
     fcResult = []
     locs = []
     with open(path, 'rb') as csvf:
@@ -85,7 +85,6 @@ def spider(path):
                         x["main"]["temp_min"],
                         x["main"]["temp_max"],
                         x["wind"]["speed"],
-                        x["wind"]["deg"],
                         x["clouds"]["all"],
                         list(weather_data)
                         ])
